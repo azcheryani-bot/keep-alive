@@ -1,0 +1,21 @@
+name: Keep HuggingFace Space Alive
+
+on:
+  schedule:
+    # هر 6 ساعت یکبار اجرا می‌شود
+    - cron: "0 */6 * * *" 
+  workflow_dispatch: # امکان اجرای دستی را فراهم می‌کند
+
+jobs:
+  restart-space:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Restart HF Space
+        env:
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+          # در خط زیر، به جای آدرس فعلی، نام کاربری و نام اسپیس خود را بنویسید
+          SPACE_ID: "alahghar/balebot1"
+        run: |
+          curl -X POST "https://huggingface.co/api/spaces/$SPACE_ID/restart" \
+          -H "Authorization: Bearer $HF_TOKEN" \
+          -H "Content-Type: application/json"
