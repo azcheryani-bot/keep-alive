@@ -19,3 +19,4 @@ jobs:
           curl -X POST "https://huggingface.co/api/spaces/$SPACE_ID/restart" \
           -H "Authorization: Bearer $HF_TOKEN" \
           -H "Content-Type: application/json"
+
