@@ -1,0 +1,15 @@
+name: Send Proxy Request
+on:
+  workflow_dispatch: # این امکان را می‌دهد که دستی از تب Actions اجرا کنید
+  schedule:
+    - cron: '0 * * * *' # هر یک ساعت یک‌بار اجرا شود (اختیاری)
+
+jobs:
+  send-request:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Send Request to Worker
+        run: |
+          curl -X GET "https://crimson-scene-23ee.a-z-cheryani.workers.dev" \
+            -H "User-Agent: GitHub-Action-Bot" \
+            -H "Authorization: Bearer ${{ secrets.API_TOKEN }}"
