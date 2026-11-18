@@ -1,0 +1,31 @@
+name: Dispatcher 24-7
+
+on:
+  schedule:
+    - cron: '58 */5 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  actions: write
+
+concurrency:
+  group: dispatcher-24-7
+  cancel-in-progress: true
+
+jobs:
+  dispatch-loop:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Run dispatcher loop
+        env:
+          DISPATCH_PAT: ${{ secrets.DISPATCH_PAT }}
+        run: exec python dispatcher.py
